@@ -7,16 +7,30 @@ from telegram.ext import (
 )
 from dotenv import load_dotenv
 
+WELCOME_MESSAGE = (
+    "👋 Welcome to the group!\n\n"
+    "📢 This is our official channel.\n"
+    "Stay tuned for updates 🚀"
+)
+
+
 async def approve_join_request(update: Update, context: ContextTypes.DEFAULT_TYPE):
     try:
         await update.chat_join_request.approve()
-        print(
-            f"✅ Approved join request from "
-            f"{update.chat_join_request.from_user.id} "
-            f"in chat {update.chat_join_request.chat.id}"
+
+        await context.bot.send_message(
+            chat_id=update.chat_join_request.chat.id,
+            text=WELCOME_MESSAGE
         )
+
+        print(
+            f"✅ Approved join request & sent welcome message to "
+            f"{update.chat_join_request.from_user.id}"
+        )
+
     except Exception as e:
-        print("❌ Error approving join request:", e)
+        print("❌ Error handling join request:", e)
+
 
 
 
