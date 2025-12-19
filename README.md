@@ -1,99 +1,118 @@
-📢 Telegram Auto-Approve & Ads Posting Bot
-
-This Telegram bot is designed to help group and channel owners automatically manage join requests and broadcast advertisements easily.
-
 ✅ Features
+🛡️ Moderation & Security
 
-Automatically approves all pending and future join requests
+Auto-Approve Join Requests
+Automatically approves pending join requests for groups and private channels.
 
-Works for both groups and channels
+Link Filter
+Detects and deletes messages containing links (http, https, t.me) from non-admins.
 
-Sends a welcome message after approval
+Spam Keyword Filter
+Blocks spam using a list of 40+ keywords (crypto, gambling, scams, etc.), including normalized text detection to prevent bypass attempts.
 
-Allows only the owner to post ads
+Flood Control
+Automatically deletes messages if a user sends more than 3 messages within 10 seconds.
 
-Broadcasts ads to all groups/channels where the bot is admin
+Warning System
 
-Lightweight and runs 24/7
+Users are warned automatically for violations
 
-No database required
+5 warnings = automatic ban
+
+📢 Management Tools
+
+Welcome Messages
+Sends a custom welcome message once a member is approved.
+
+Advertisement Broadcasting (Owner Only)
+Broadcast messages to all groups where the bot is an admin.
+
+User Tagging
+Reply to any message with /tag to mention the user using an inline link.
+
+Admin Commands
+
+/warn – Manually add a warning
+
+/unwarn – Remove a warning
 
 🛠 Requirements
 
-Python 3.10 or higher
+Python: 3.10 or higher
 
-A Telegram Bot Token (via BotFather)
+Telegram Bot Token (from @BotFather)
+
+Dependencies:
+
+python-telegram-bot[job-queue]
+
+python-dotenv
 
 ⚙️ Installation & Setup
-1️⃣ Download the project
+1️⃣ Prepare the Environment
 
-Clone the GitHub repository OR
+Extract the ZIP file and open a terminal/command prompt in the project folder.
 
-Download the ZIP and extract it
-
-2️⃣ Install dependencies
-
-Open a terminal inside the project folder and run:
-
+2️⃣ Install Dependencies
 pip install -r requirements.txt
 
-3️⃣ Create .env file
+3️⃣ Configure the Bot
+Create .env file
 
-Create a file named .env in the project folder and add:
+Add the following in the root directory:
 
-BOT_TOKEN=YOUR_TELEGRAM_BOT_TOKEN
+BOT_TOKEN=your_telegram_bot_token_here
 
-4️⃣ Set the ad owner (important)
+Set Owner ID
 
-In main.py, update this line with your Telegram user ID:
+Open main.py and update:
 
-OWNER_USER_ID = YOUR_TELEGRAM_USER_ID
+OWNER_USER_ID = 123456789
 
 
-You can get your Telegram user ID using @userinfobot.
+(You can get your Telegram ID from @userinfobot)
 
-5️⃣ Run the bot
+4️⃣ Run the Bot
 python main.py
 
 
 You should see:
 
-Bot is running and auto-approving join requests...
+✅ Bot is running and moderation features are active...
 
 🚀 How to Use
-🔹 Add the bot to your group/channel
+🔹 Group Setup
 
-Promote the bot to Admin
+Add the bot to your Group or Channel
 
-Enable:
+Promote it to Admin with these permissions:
 
-✅ Post messages
+Delete Messages
 
-✅ Approve new members
+Ban Users
 
-🔹 Enable Join Requests
+Invite Users via Link
 
-Turn ON Approve New Members
+Enable Join Requests:
 
-🔹 Post Ads
+Group Settings → Edit → Invite Links
 
-Open a private chat with the bot
+Turn “Approve New Members” ON
 
-Send:
+🔹 Commands
+Command	Description
+/post_ad <text>	Broadcast an ad to all managed groups (Owner only)
+/tag	Reply to a user to mention them
+/warn	Reply to a user to add a warning
+/unwarn	Reply to a user to remove a warning
+📝 Technical Notes
 
-/post_ad Your advertisement text here
+Persistence
+Warning counts are stored in-memory. Restarting the bot resets all warnings.
 
+Admin Immunity
+Admins and the group creator are never warned, muted, or moderated.
 
-The bot will automatically post the ad to all groups/channels where it has admin rights.
+Auto-Cleanup
+Bot warning messages are automatically deleted after 10 seconds to keep chats clean.
 
-📝 Notes
-
-Ads can be posted only by the configured owner
-
-The bot must be running continuously for automation to work
-
-Deployment to VPS/cloud can be done if required
-
-📞 Support
-
-For any setup or deployment help, feel free to reach out.
