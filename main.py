@@ -16,13 +16,12 @@ from telegram.ext import (
 
 logging.basicConfig(level=logging.WARNING)
 
-WELCOME_MESSAGE = "👋 Welcome to the group!\n\n📢 This is our official channel.\nStay tuned for updates 🚀"
 USER_WARNINGS = {}
 MAX_WARNINGS = 5
 USER_MESSAGE_LOG = {}
 FLOOD_THRESHOLD = 3
 FLOOD_WINDOW = 10
-OWNER_USER_ID = 6546783150
+OWNER_USER_ID = 8565631938
 AD_TARGET_CHATS = set()
 
 SPAM_KEYWORDS = [
@@ -48,7 +47,7 @@ async def delete_warning_message(context: ContextTypes.DEFAULT_TYPE):
 async def approve_join_request(update: Update, context: ContextTypes.DEFAULT_TYPE):
     try:
         await update.chat_join_request.approve()
-        await context.bot.send_message(chat_id=update.chat_join_request.chat.id, text=WELCOME_MESSAGE)
+        await context.bot.send_message(chat_id=update.chat_join_request.chat.id)
     except Exception as e:
         logging.error(f"Join Request Error: {e}")
 
