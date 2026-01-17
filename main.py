@@ -1,6 +1,7 @@
 import os
 import re
 import time
+import json
 import logging
 from dotenv import load_dotenv
 from telegram import Update
@@ -22,7 +23,24 @@ USER_MESSAGE_LOG = {}
 FLOOD_THRESHOLD = 3
 FLOOD_WINDOW = 10
 OWNER_USER_ID = 8565631938
+CHATS_FILE = "chats.json"
 AD_TARGET_CHATS = set()
+
+def load_chats():
+    global AD_TARGET_CHATS
+    if os.path.exists(CHATS_FILE):
+        try:
+            with open(CHATS_FILE, "r") as f:
+                AD_TARGET_CHATS = set(json.load(f))
+        except:
+            AD_TARGET_CHATS = set()
+
+def save_chats():
+    try:
+        with open(CHATS_FILE, "w") as f:
+            json.dump(list(AD_TARGET_CHATS), f)
+    except Exception as e:
+        logging.error(f"Save Error: {e}")
 
 SPAM_KEYWORDS = [
     # Crypto & Scams
@@ -72,8 +90,10 @@ async def track_bot_status(update: Update, context: ContextTypes.DEFAULT_TYPE):
     status = update.my_chat_member.new_chat_member.status
     if status in ("administrator", "creator"):
         AD_TARGET_CHATS.add(chat.id)
+        save_chats()
     elif status in ("left", "kicked"):
         AD_TARGET_CHATS.discard(chat.id)
+        save_chats()
 
 async def post_ad(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.effective_chat.type != "private" or update.effective_user.id != OWNER_USER_ID:
@@ -179,6 +199,7 @@ async def unwarn_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(f"✅ Warning removed. Current: {USER_WARNINGS[target_id]}/{MAX_WARNINGS}")
 
 def main():
+    load_chats()
     load_dotenv()
 
     token = os.getenv("BOT_TOKEN")
