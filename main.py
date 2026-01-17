@@ -22,7 +22,7 @@ MAX_WARNINGS = 5
 USER_MESSAGE_LOG = {}
 FLOOD_THRESHOLD = 3
 FLOOD_WINDOW = 10
-OWNER_USER_ID = 8565631938
+OWNER_IDS = {8565631938, 6546783150}
 CHATS_FILE = "chats.json"
 AD_TARGET_CHATS = set()
 
@@ -96,7 +96,7 @@ async def track_bot_status(update: Update, context: ContextTypes.DEFAULT_TYPE):
         save_chats()
 
 async def post_ad(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    if update.effective_chat.type != "private" or update.effective_user.id != OWNER_USER_ID:
+    if update.effective_chat.type != "private" or update.effective_user.id not in OWNER_IDS:
         return
     if not context.args:
         await update.message.reply_text("⚠️ Usage: /post_ad <message>")
