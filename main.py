@@ -198,6 +198,18 @@ async def unwarn_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     USER_WARNINGS[target_id] = max(0, USER_WARNINGS.get(target_id, 0) - 1)
     await update.message.reply_text(f"✅ Warning removed. Current: {USER_WARNINGS[target_id]}/{MAX_WARNINGS}")
 
+async def check_groups(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if update.effective_user.id not in OWNER_IDS: return
+    
+    if not AD_TARGET_CHATS:
+        await update.message.reply_text("❌ I don't know any groups yet. Please remove and re-add me to your groups (as Admin) so I can save them.")
+        return
+        
+    text = f"📂 I am targeting {len(AD_TARGET_CHATS)} groups:\n"
+    for chat_id in AD_TARGET_CHATS:
+        text += f"- ID: `{chat_id}`\n"
+    await update.message.reply_text(text, parse_mode="Markdown")
+
 def main():
     load_chats()
     load_dotenv()
@@ -215,6 +227,7 @@ def main():
     app.add_handler(CommandHandler("tag", tag_user))
     app.add_handler(CommandHandler("warn", warn_command))
     app.add_handler(CommandHandler("unwarn", unwarn_command))
+    app.add_handler(CommandHandler("check_groups", check_groups))
 
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, global_moderator))
 
