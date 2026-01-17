@@ -25,6 +25,7 @@ OWNER_USER_ID = 8565631938
 AD_TARGET_CHATS = set()
 
 SPAM_KEYWORDS = [
+    # Crypto & Scams
     "crypto", "bitcoin", "eth ", "btc ", "tether", "binance", "pump", "doubling",
     "mining", "forex", "trading signal", "investment", "passive income", "profit",
     "return on investment", "wallet", "seed phrase", "airdrop", "presale", "token",
@@ -34,7 +35,22 @@ SPAM_KEYWORDS = [
     "official support", "admin support", "kyc verification", "claim now", "gift",
     "premium for free", "account hacked", "security alert", "verify your account",
     "dm me", "contact me", "check bio", "join channel", "click here", "limited offer",
-    "whatsapp", "telegram.me", "t.me/", "fast profit", "guaranteed"
+    "whatsapp", "telegram.me", "t.me/", "fast profit", "guaranteed",
+
+    # Vulgar & Adult Content
+    "sex", "sexy", "pussy", "hot videos", "porn", "xxx", "nude",
+    "18+", "nsfw", "adult", "uncensored", "leaked", "private tape",
+    "dick", "cock", "boobs", "tits", "breast", "ass", "booty", "butt",
+    "vagina", "clit", "cum", "squirt", "orgasm", "masturbate", "horny",
+    "slut", "whore", "bitch", "fuck", "motherfucker",
+    "hot girl", "cam girl", "live show", "dating", "hookup", "meetup",
+    "incest", "milf", "teen sex", "hentai", "anime sex",
+    "onlyfans", "fansly", "brazzers", "pornhub", "xvideos",
+    "strip", "naked", "topless", "upskirt",
+    "blowjob", "handjob", "anal", "deepthroat", "creampie",
+    "erotic", "sensual", "kamasutra",
+    "escort", "call girl", "massage happy ending",
+    "viagra", "cialis", "enlarge"
 ]
 
 async def delete_warning_message(context: ContextTypes.DEFAULT_TYPE):
